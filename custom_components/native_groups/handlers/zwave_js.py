@@ -218,9 +218,7 @@ class ZWaveJSHandler(ProtocolHandler):
         """Check if a base group has capability sub-groups."""
         return base_name in self._group_capabilities
 
-    def get_capability_group_nodes(
-        self, base_name: str, capability: str
-    ) -> list[int]:
+    def get_capability_group_nodes(self, base_name: str, capability: str) -> list[int]:
         """Get node IDs for a capability sub-group."""
         group_key = f"{base_name}.{capability}"
         return self._groups.get(group_key, [])
@@ -561,9 +559,7 @@ class ZWaveJSHandler(ProtocolHandler):
             )
         elif not color_value:
             # No color or brightness - just turn on
-            tasks.append(
-                asyncio.create_task(self._send_binary_command(node_ids, True))
-            )
+            tasks.append(asyncio.create_task(self._send_binary_command(node_ids, True)))
 
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)

@@ -187,7 +187,9 @@ class NativeGroupOrchestrator:
         options = self._options
 
         # Listen for state changes (groups, scenes)
-        if options.get(CONF_ENABLE_GROUPS, True) or options.get(CONF_ENABLE_SCENES, True):
+        if options.get(CONF_ENABLE_GROUPS, True) or options.get(
+            CONF_ENABLE_SCENES, True
+        ):
             self._unsub_listeners.append(
                 self.hass.bus.async_listen(EVENT_STATE_CHANGED, self._on_state_changed)
             )
@@ -225,7 +227,9 @@ class NativeGroupOrchestrator:
             )
 
         # Listen for entity registry changes (area/label assignments)
-        if options.get(CONF_ENABLE_AREAS, True) or options.get(CONF_ENABLE_LABELS, True):
+        if options.get(CONF_ENABLE_AREAS, True) or options.get(
+            CONF_ENABLE_LABELS, True
+        ):
             self._unsub_listeners.append(
                 self.hass.bus.async_listen(
                     er.EVENT_ENTITY_REGISTRY_UPDATED, self._on_entity_registry_updated
@@ -266,7 +270,10 @@ class NativeGroupOrchestrator:
                 for group_id, group_info in actual_groups.items():
                     group_name = group_info.get("name", "")
                     # Check if this is one of our managed groups
-                    if group_name.startswith("ha_") and str(group_id) not in managed_group_ids:
+                    if (
+                        group_name.startswith("ha_")
+                        and str(group_id) not in managed_group_ids
+                    ):
                         _LOGGER.info(
                             "Cleaning up orphaned %s group: %s",
                             protocol,
@@ -379,7 +386,9 @@ class NativeGroupOrchestrator:
         elif action == "update" and area_id:
             mapping_key = f"area.{area_id}"
             self._create_background_task(
-                self._reprovision_mapping(mapping_key, lambda: self._provision_area(area_id)),
+                self._reprovision_mapping(
+                    mapping_key, lambda: self._provision_area(area_id)
+                ),
                 f"native_groups_area_update_{area_id}",
             )
 
@@ -404,7 +413,9 @@ class NativeGroupOrchestrator:
         elif action == "update" and floor_id:
             mapping_key = f"floor.{floor_id}"
             self._create_background_task(
-                self._reprovision_mapping(mapping_key, lambda: self._provision_floor(floor_id)),
+                self._reprovision_mapping(
+                    mapping_key, lambda: self._provision_floor(floor_id)
+                ),
                 f"native_groups_floor_update_{floor_id}",
             )
 
@@ -429,7 +440,9 @@ class NativeGroupOrchestrator:
         elif action == "update" and label_id:
             mapping_key = f"label.{label_id}"
             self._create_background_task(
-                self._reprovision_mapping(mapping_key, lambda: self._provision_label(label_id)),
+                self._reprovision_mapping(
+                    mapping_key, lambda: self._provision_label(label_id)
+                ),
                 f"native_groups_label_update_{label_id}",
             )
 
@@ -492,9 +505,7 @@ class NativeGroupOrchestrator:
         if not members:
             return
 
-        await self._provision_entity_list(
-            group_id, GROUPING_TYPE_GROUP, list(members)
-        )
+        await self._provision_entity_list(group_id, GROUPING_TYPE_GROUP, list(members))
 
     # ─────────────────────────────────────────────────────────────
     # SCENE LIFECYCLE
@@ -760,10 +771,11 @@ class NativeGroupOrchestrator:
                 try:
                     # For Z-Wave, use capability-based grouping
                     if protocol == PROTOCOL_ZWAVE_JS and len(entities) > 1:
-                        native_group_id, ungrouped_from_protocol = (
-                            await self._create_zwave_capability_groups(
-                                handler, group_name, entities
-                            )
+                        (
+                            native_group_id,
+                            ungrouped_from_protocol,
+                        ) = await self._create_zwave_capability_groups(
+                            handler, group_name, entities
                         )
                     elif len(entities) > 1:
                         native_ids = [e.native_id for e in entities]
@@ -842,9 +854,7 @@ class NativeGroupOrchestrator:
                 members_by_capability[entity.capability].append(entity.native_id)
 
         # Log capability distribution
-        caps_with_members = {
-            k: len(v) for k, v in members_by_capability.items() if v
-        }
+        caps_with_members = {k: len(v) for k, v in members_by_capability.items() if v}
         if caps_with_members:
             _LOGGER.debug(
                 "Z-Wave group %s capability distribution: %s",

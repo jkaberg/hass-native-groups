@@ -53,9 +53,15 @@ SERVICE_DISPATCH_SCHEMA: Final = vol.Schema(
         vol.Optional("target"): vol.Schema(
             {
                 vol.Optional("entity_id"): vol.Any(cv.entity_ids, cv.entity_id),
-                vol.Optional("area_id"): vol.Any(vol.All(cv.ensure_list, [cv.string]), cv.string),
-                vol.Optional("floor_id"): vol.Any(vol.All(cv.ensure_list, [cv.string]), cv.string),
-                vol.Optional("label_id"): vol.Any(vol.All(cv.ensure_list, [cv.string]), cv.string),
+                vol.Optional("area_id"): vol.Any(
+                    vol.All(cv.ensure_list, [cv.string]), cv.string
+                ),
+                vol.Optional("floor_id"): vol.Any(
+                    vol.All(cv.ensure_list, [cv.string]), cv.string
+                ),
+                vol.Optional("label_id"): vol.Any(
+                    vol.All(cv.ensure_list, [cv.string]), cv.string
+                ),
             }
         ),
         vol.Optional("data"): dict,
@@ -74,7 +80,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: NativeGroupsConfigEntry) -> bool:
+async def async_setup_entry(
+    hass: HomeAssistant, entry: NativeGroupsConfigEntry
+) -> bool:
     """Set up Native Group Orchestration from a config entry."""
     orchestrator = NativeGroupOrchestrator(hass, entry)
 
@@ -93,7 +101,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: NativeGroupsConfigEntry)
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: NativeGroupsConfigEntry) -> bool:
+async def async_unload_entry(
+    hass: HomeAssistant, entry: NativeGroupsConfigEntry
+) -> bool:
     """Unload a config entry."""
     orchestrator = entry.runtime_data
 
@@ -102,7 +112,12 @@ async def async_unload_entry(hass: HomeAssistant, entry: NativeGroupsConfigEntry
 
     # Unregister services if no entries left
     if not hass.config_entries.async_entries(DOMAIN):
-        for service_name in (SERVICE_SYNC_ALL, SERVICE_SYNC_ENTITY, SERVICE_GET_STATUS, SERVICE_DISPATCH):
+        for service_name in (
+            SERVICE_SYNC_ALL,
+            SERVICE_SYNC_ENTITY,
+            SERVICE_GET_STATUS,
+            SERVICE_DISPATCH,
+        ):
             hass.services.async_remove(DOMAIN, service_name)
 
     return True
