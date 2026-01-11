@@ -7,7 +7,10 @@ import logging
 import re
 from typing import TYPE_CHECKING
 
-from homeassistant.components.light.const import COLOR_MODES_BRIGHTNESS, COLOR_MODES_COLOR
+from homeassistant.components.light.const import (
+    COLOR_MODES_BRIGHTNESS,
+    COLOR_MODES_COLOR,
+)
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 
 from .const import (
@@ -99,9 +102,7 @@ class EntityClassifier:
             capability=capability,
         )
 
-    def classify_entities(
-        self, entity_ids: list[str]
-    ) -> dict[str, list[ProtocolInfo]]:
+    def classify_entities(self, entity_ids: list[str]) -> dict[str, list[ProtocolInfo]]:
         """Classify multiple entities and group by protocol.
 
         Returns dict mapping protocol name to list of ProtocolInfo objects.
@@ -217,4 +218,3 @@ class EntityClassifier:
 
         # Should not reach here due to ZWAVE_GROUPABLE_DOMAINS check
         return ZWAVE_CAP_BINARY
-

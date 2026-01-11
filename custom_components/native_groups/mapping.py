@@ -157,4 +157,3 @@ class GroupMapping:
             mapping.native_scenes[k] = NativeSceneRef(**v)
 
         return mapping
-

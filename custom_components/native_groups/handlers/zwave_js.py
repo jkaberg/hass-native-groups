@@ -72,15 +72,6 @@ class ZWaveJSHandler(ProtocolHandler):
         Returns the ZwaveNode object or None if not found.
         """
         try:
-            from homeassistant.components.zwave_js import (  # noqa: PLC0415
-                get_device_id,
-            )
-            from homeassistant.components.zwave_js.helpers import (  # noqa: PLC0415
-                async_get_node_from_device_id,
-            )
-
-            dev_reg = dr.async_get(self.hass)
-
             # Find device by node_id - iterate through zwave_js devices
             for entry in self.hass.config_entries.async_entries("zwave_js"):
                 if not hasattr(entry, "runtime_data") or entry.runtime_data is None:

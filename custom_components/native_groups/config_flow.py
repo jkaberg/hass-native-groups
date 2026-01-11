@@ -162,4 +162,3 @@ class NativeGroupsOptionsFlow(OptionsFlow):
                 }
             ),
         )
-

@@ -54,4 +54,3 @@ class HandlerRegistry:
     def get_handler(self, protocol: str) -> ProtocolHandler | None:
         """Get a specific handler by protocol ID."""
         return self._handlers.get(protocol)
-

@@ -66,4 +66,3 @@ ZWAVE_CAP_COLOR: Final = "color"  # Supports color (Color Switch CC)
 # Domains that support Z-Wave multicast grouping
 # Other domains (climate, lock, fan) use different CCs and fall through to unicast
 ZWAVE_GROUPABLE_DOMAINS: Final = frozenset({"light", "switch", "cover"})
-

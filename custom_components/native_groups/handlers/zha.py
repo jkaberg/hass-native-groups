@@ -182,9 +182,7 @@ class ZHAHandler(ProtocolHandler):
 
             # Convert IEEE addresses to GroupMemberReference format
             # ZHA expects members as list of dicts with ieee and endpoint_id
-            members = [
-                {"ieee": ieee, "endpoint_id": 1} for ieee in member_native_ids
-            ]
+            members = [{"ieee": ieee, "endpoint_id": 1} for ieee in member_native_ids]
 
             # Use internal gateway API to create group
             group = await gateway_proxy.gateway.async_create_zigpy_group(
@@ -480,9 +478,7 @@ class ZHAHandler(ProtocolHandler):
 
         For now, we fall back to individual commands.
         """
-        _LOGGER.debug(
-            "ZHA ad-hoc multicast not supported, sending individual commands"
-        )
+        _LOGGER.debug("ZHA ad-hoc multicast not supported, sending individual commands")
         # Would need to resolve IEEE addresses to entity IDs and send individually
         # This is a limitation of the current implementation
 

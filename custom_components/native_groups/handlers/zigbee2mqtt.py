@@ -22,9 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 class Zigbee2MQTTHandler(ProtocolHandler):
     """Handler for Zigbee2MQTT integration."""
 
-    def __init__(
-        self, hass: HomeAssistant, base_topic: str = Z2M_BASE_TOPIC
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, base_topic: str = Z2M_BASE_TOPIC) -> None:
         """Initialize Zigbee2MQTT handler."""
         super().__init__(hass)
         self._base_topic = base_topic
@@ -319,4 +317,3 @@ class Zigbee2MQTTHandler(ProtocolHandler):
                 return {"position": data.get("position", 0)}
 
         return {"state": "ON" if service == "turn_on" else "OFF"}
-

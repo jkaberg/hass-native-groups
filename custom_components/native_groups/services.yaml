@@ -62,8 +62,8 @@ dispatch:
       required: false
       selector:
         target:
-          entity:
-          area:
+          entity: {}
+          area: {}
     data:
       name: Data
       description: Additional service data (e.g., brightness, color).
