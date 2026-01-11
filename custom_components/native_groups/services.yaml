@@ -1,0 +1,73 @@
+sync_all:
+  name: Sync all native groups
+  description: >-
+    Force re-synchronization of all Home Assistant groups, scenes, areas,
+    floors, and labels to native protocol groups. This updates Z-Wave
+    multicast groups, Zigbee groups, and native scenes.
+
+sync_entity:
+  name: Sync entity
+  description: >-
+    Synchronize a specific Home Assistant group, scene, area, floor, or
+    label to its native protocol groups.
+  fields:
+    entity_id:
+      name: Entity ID
+      description: >-
+        The group, scene, area (area.xxx), floor (floor.xxx), or label
+        (label.xxx) to sync.
+      required: true
+      example: "group.living_room"
+      selector:
+        text:
+
+get_status:
+  name: Get status
+  description: >-
+    Get the sync status for an entity, including which native groups/scenes
+    are managed.
+  fields:
+    entity_id:
+      name: Entity ID
+      description: The entity to check status for.
+      required: true
+      example: "group.living_room"
+      selector:
+        text:
+
+dispatch:
+  name: Dispatch via native groups
+  description: >-
+    Dispatch a service call through native protocol groups. This sends commands
+    using native multicast instead of individual device commands, eliminating
+    the 'popcorn effect' for faster, simultaneous responses.
+  fields:
+    domain:
+      name: Domain
+      description: The service domain (e.g., 'light', 'switch').
+      required: true
+      example: "light"
+      selector:
+        text:
+    service:
+      name: Service
+      description: The service to call (e.g., 'turn_on', 'turn_off').
+      required: true
+      example: "turn_on"
+      selector:
+        text:
+    target:
+      name: Target
+      description: The target for the service call.
+      required: false
+      selector:
+        target:
+          entity:
+          area:
+    data:
+      name: Data
+      description: Additional service data (e.g., brightness, color).
+      required: false
+      example: '{"brightness": 255}'
+      selector:
+        object:

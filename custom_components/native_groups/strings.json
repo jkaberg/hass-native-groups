@@ -1,0 +1,115 @@
+{
+  "title": "Native Group Orchestration",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure native group orchestration",
+        "description": "This integration automatically provisions native protocol groups for your Home Assistant groups, scenes, areas, floors, and labels. This eliminates the 'popcorn effect' and provides faster response times.",
+        "data": {
+          "enabled_protocols": "Enabled protocols",
+          "enable_groups": "Enable for groups",
+          "enable_scenes": "Enable for scenes",
+          "enable_areas": "Enable for areas",
+          "enable_floors": "Enable for floors",
+          "enable_labels": "Enable for labels"
+        },
+        "data_description": {
+          "enabled_protocols": "Select which protocols to manage native groups for",
+          "enable_groups": "Create native groups for group.* entities",
+          "enable_scenes": "Create native scenes for scene.* entities",
+          "enable_areas": "Create native groups for area assignments",
+          "enable_floors": "Create native groups for floor assignments",
+          "enable_labels": "Create native groups for label assignments"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single configuration is allowed"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure native group orchestration",
+        "data": {
+          "enabled_protocols": "Enabled protocols",
+          "enable_groups": "Enable for groups",
+          "enable_scenes": "Enable for scenes",
+          "enable_areas": "Enable for areas",
+          "enable_floors": "Enable for floors",
+          "enable_labels": "Enable for labels"
+        },
+        "data_description": {
+          "enabled_protocols": "Select which protocols to manage native groups for",
+          "enable_groups": "Create native groups for group.* entities",
+          "enable_scenes": "Create native scenes for scene.* entities",
+          "enable_areas": "Create native groups for area assignments",
+          "enable_floors": "Create native groups for floor assignments",
+          "enable_labels": "Create native groups for label assignments"
+        }
+      }
+    }
+  },
+  "services": {
+    "sync_all": {
+      "name": "Sync all native groups",
+      "description": "Force re-synchronization of all Home Assistant groups, scenes, areas, floors, and labels to native protocol groups. This will update Z-Wave multicast groups, Zigbee groups, and native scenes."
+    },
+    "sync_entity": {
+      "name": "Sync entity",
+      "description": "Synchronize a specific Home Assistant group, scene, area, floor, or label to its native protocol groups.",
+      "fields": {
+        "entity_id": {
+          "name": "Entity ID",
+          "description": "The group, scene, area (area.xxx), floor (floor.xxx), or label (label.xxx) to sync."
+        }
+      }
+    },
+    "get_status": {
+      "name": "Get status",
+      "description": "Get the sync status for an entity, including which native groups/scenes are managed.",
+      "fields": {
+        "entity_id": {
+          "name": "Entity ID",
+          "description": "The entity to check status for."
+        }
+      }
+    },
+    "dispatch": {
+      "name": "Dispatch via native groups",
+      "description": "Dispatch a service call through native protocol groups for faster, simultaneous responses.",
+      "fields": {
+        "domain": {
+          "name": "Domain",
+          "description": "The service domain (e.g., 'light', 'switch')."
+        },
+        "service": {
+          "name": "Service",
+          "description": "The service to call (e.g., 'turn_on', 'turn_off')."
+        },
+        "target": {
+          "name": "Target",
+          "description": "The target for the service call."
+        },
+        "data": {
+          "name": "Data",
+          "description": "Additional service data (e.g., brightness, color)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "sync_failed": {
+      "message": "Failed to sync {entity_id}: {error}"
+    },
+    "entity_not_found": {
+      "message": "Entity {entity_id} not found"
+    },
+    "protocol_unavailable": {
+      "message": "Protocol {protocol} is not available"
+    },
+    "not_loaded": {
+      "message": "Native group orchestration is not loaded"
+    }
+  }
+}
